@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block block1 %}
+
+<h3>Hey there {{user.username}}!</h3>
+<h2>Products on Public--></h2>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Image</th>
+        <th>Description</th>
+        <th>Highest Bid</th>
+        <th>Bid by</th>
+        <th>Actions</th>
+    </tr>
+    {% if allProducts %}
+    {% for product in allProducts %}
+    {% if product.owner_id != user.id %}
+    <tr>
+        <td>{{product.ptitle}}</td>
+        <td>
+            <div>
+                <img src="{{ url_for('display_image', filename = product.pimg) }}">
+            </div>
+        </td>
+        <td>{{product.pdesc}}</td>
+        <td>
+            {% if product.hbid %}
+              {{product.hbid}}
+              {% endif %}
+        </td>
+        <td>{{product.bidby}}</td>
+        <td>
+            <form action="/bid/{{product.id}}/{{user.id}}" method="POST">
+                <input type="number" class="form-control" name="bidamount" id="bid" placeholder="bid here!">
+                <button type="submit" class="btn btn-primary">Go</button>
+            </form>
+        </td>
+    </tr>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+</table>
+
+{% endblock block1 %}

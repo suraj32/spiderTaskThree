@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block block1 %}
+
+<h3>{{product.owner.username}}!!</h3>
+<p><i>You can edit your product here 👇🏻</i></p>
+<form action="/edit/{{product.id}}" method="POST" enctype="multipart/form-data">
+    <div>
+        <label for="title" style="font-size: 17px;">Product Title</label>
+        <input type="text" name="title" id="title" value="{{product.ptitle}}">
+    </div>
+    <div>
+        <label for="desc" style="font-size: 17px;">Description</label>
+        <input type="text" name="desc" id="desc" value="{{product.pdesc}}">
+    </div>
+    <div>
+        <label for="img" style="font-size: 17px;">Image</label>
+        <input type="file" name="img" id="img" autocomplete="off" required>
+    </div>
+    {% with messages = get_flashed_messages() %}  
+         {% if messages %}
+               {% for message in messages %}  
+                    <p><i>{{ message }}</i></p>
+               {% endfor %}  
+         {% endif %}
+      {% endwith %} 
+    <button type="submit" class="btn btn-primary">Edit Product</button>
+</form>
+
+{% endblock block1 %}

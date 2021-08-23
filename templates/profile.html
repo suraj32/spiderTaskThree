@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block block1 %}
+    <p>Welcome {{user.username}}!!</p>
+    <p><i>You can add your product here 👇🏻</i></p>
+    <form action="/profile/{{user.id}}" method="POST" enctype="multipart/form-data">
+        <div>
+            <label for="title" style="font-size: 17px;">Product Title</label>
+            <input type="text" name="title" id="title">
+        </div>
+        <div>
+            <label for="desc" style="font-size: 17px;">Description</label>
+            <input type="text" name="desc" id="desc">
+        </div>
+        <div>
+            <label for="img" style="font-size: 17px;">Image</label>
+            <input type="file" name="img" id="img" autocomplete="off" required>
+        </div>
+        {% with messages = get_flashed_messages() %}  
+             {% if messages %}  
+                   {% for message in messages %}  
+                        <p><i>{{ message }}</i></p>
+                   {% endfor %}  
+             {% endif %}
+          {% endwith %} 
+        <button type="submit" class="btn btn-primary">Add Product</button>
+    </form>
+    <h2>Your Products</h2>
+<table>
+        <tr>
+            <th>Name</th>
+            <th>Image</th>
+            <th>Description</th>
+            <th>Highest Bid</th>
+            <th>Bid by</th>
+            <th>Actions</th>
+          </tr>
+    {% if user.products %}
+    {% for product in user.products %}
+        <tr>
+          <td>{{product.ptitle}}</td>
+          <td>
+            <div>
+                <img src="{{ url_for('display_image', filename = product.pimg) }}">
+            </div>
+          </td>
+          <td>{{product.pdesc}}</td>
+          <td>
+              {% if product.hbid %}
+              {{product.hbid}}
+              {% endif %}
+          </td>
+          <td>{{product.bidby}}</td>
+          <td>
+            <a href="/edit/{{product.id}}" type="button" >Edit</button>
+            <a href="/delete/{{product.id}}" type="button" >Delete</button>
+          </td>
+        </tr>
+    {% endfor %}
+    {% endif %}
+</table>
+{% endblock block1 %}

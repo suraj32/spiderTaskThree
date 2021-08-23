@@ -1,0 +1,25 @@
+{% extends 'login.html' %}
+{% block loginForm %}
+<form action="/register" method="POST">
+    <div>
+        <label for="name" class="form-label" style="font-size: 17px;">User name</label>
+        <input type="text" class="form-control" name='name' id="name">
+    </div>
+    <div>
+        <label for="psword" class="form-label" style="font-size: 17px;">Password</label>
+        <input type="password" class="form-control" name='psword' id="psword">
+    </div>
+    <div>
+        <label for="repeatPassword" class="form-label" style="font-size: 17px;">Repeat Password</label>
+        <input type="text" class="form-control" name='repeatPassword' id="repeatPassword" placeholder="confirm password">
+    </div>
+    {% with messages = get_flashed_messages() %}  
+         {% if messages %}  
+               {% for message in messages %}  
+               <p><i>{{ message }}</i></p> 
+               {% endfor %}  
+         {% endif %}  
+      {% endwith %} 
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+{% endblock loginForm %}
